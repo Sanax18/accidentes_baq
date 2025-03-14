@@ -1,0 +1,68 @@
+# domain.yml
+version: "3.1"
+
+intents:
+  - saludar
+  - opciones
+  - responder_agradecimiento
+  - eres_bot
+  - despedirse
+  - como_estas
+  - como_estoy
+  - estado_p
+  - estado_n
+  - enfermedades
+  - recomendaciones
+  - consulta_cedula
+
+responses:
+  utter_saludar:
+    - text: "¡Bienvenido! Soy tu asistente Enfermedades. ¿En qué puedo ayudarte? \n\n Puedes preguntarme por las siguientes temáticas: \n 1. ¿Cómo estás? \n 2. ¿Quién eres? \n 3. ¿A qué te dedicas?"
+
+  utter_opciones:
+    - text: "¿Tienes alguna otra petición? \n\n 1. ¿Quién eres? \n 2. ¿A qué te dedicas?"
+
+  utter_responder_agradecimiento:
+    - text: "¡Fue un completo placer haberte ayudado! ¿Necesitas algo más en lo que te pueda asistir?"
+      buttons: 
+        - title: "Si."
+          payload: "/r_si"
+        - title: "No."
+          payload: "/r_no"
+
+  utter_r_si:
+    - text: "¡Perfecto! ¿En qué más te puedo ayudar?"
+
+  utter_r_no:
+    - text: "¡De acuerdo! No dudes en volver si necesitas más ayuda. 😊"
+
+  utter_despedirse:
+    - text: "¡Nos vemos en una próxima!"
+
+  utter_como_estas:
+    - text: "¿Cómo estoy? No puedo sentir, ya que soy un ser intangible, pero si pudiera ¡me sentiría vivo! \n\n ¿Qué hay de ti, querido usuario?"
+
+  utter_como_estoy:
+    - text: "Dime cómo te sientes, y trataré de ayudarte."
+
+  utter_estado_p:
+    - text: "¡Me alegra mucho!"
+
+  utter_estado_n:
+    - text: "¡Espero, de todo corazón, que tu situación mejore!"
+
+  utter_eres_bot:
+    - text: "Soy un bot, impulsado por Rasa."
+
+  utter_enfermedades:
+    - text: "Aquí puedes obtener información sobre enfermedades comunes."
+
+  utter_recomendaciones:
+    - text: "Aquí tienes algunas recomendaciones de salud."
+
+  utter_consulta_cedula:
+    - text: "Por favor, ingresa tu número de cédula para realizar la consulta."
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

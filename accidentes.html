@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Zonas de Accidentalidad en Barranquilla</title>
+    <link href="css/styles.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=TU_API_KEY&callback=initMap" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body class="sb-nav-fixed" onload="createChart(labels, data)">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="index.html">Bienvenido</a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+
+        </form>
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    <div class="text-center">
+                        <button class="btn btn-danger custom-button" onclick="logout()">Cerrar sesión</button>
+                    </div>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-house"></i></div>
+                                Principal
+                            </a>
+                            <a class="nav-link" href="control.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Prueba
+                            </a>
+                            <a class="nav-link" href="IOT.html">
+                                <div class="sb-nav-link-icon"><i class=" fas fa-chart-area"></i></div>
+                                Accidentes
+                            </a>
+                            <a class="nav-link" href="tablero.html" id="tableroLink">
+                                <div class="sb-nav-link-icon"><i class="fas fa-graph-up"></i></div>
+                                Tablero
+                            </a>
+                            <a class="nav-link" href="usuarios.html" id="usuariosLink">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Usuarios
+                            </a>
+                            <a class="nav-link" href="reportes.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-bar"></i></div>
+                                Reportes
+                            </a>
+                        </li>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Usuario:</div>
+                    User
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <div class="welcome-message text-center mb-5">
+                        <section class="container mt-4">
+                            <!-- Título Principal -->
+                            <div class="row text-center mb-5">
+                                <h1 class="display-4 text-primary">Accidentalidad en Barranquilla</h1>
+                                <p>Conoce las zonas con mayor índice de accidentalidad y mantente informado para tomar
+                                    precauciones.</p>
+                            </div>
+                            <div class="row mb-4 center">
+                                <!-- Gráfico de Accidentes -->
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h3>Estadísticas de Accidentes</h3>
+                                            <canvas id="accidentChart" style="height: 300px;"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                        <div class="card mb-6">
+                                            <div class="card-body">
+                                                <h3>Zonas con Más Accidentes</h3>
+                                                <ul id="listaZonasAccidentes" class="list-group">
+    
+                                                </ul>
+                                            </div>
+                                        </div>
+                                </div>
+
+
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h3>Recomendaciones de Seguridad</h3>
+                                            <ul class="list-group">
+                                                <li class="list-group-item">Evita áreas de alto tráfico en horas pico.
+                                                </li>
+                                                <li class="list-group-item">Respeta los límites de velocidad y señales
+                                                    de tránsito.</li>
+                                                <li class="list-group-item">Usa siempre el cinturón de seguridad.</li>
+                                                <li class="list-group-item">No uses dispositivos móviles mientras
+                                                    conduces.</li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row mb-4">
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4>Accidentes Reportados</h4>
+                                            <p id="totalAccidents">Total: <strong>0</strong></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4>Mes con Mayor Accidentalidad</h4>
+                                            <p id="topMonth">Mes: <strong>Marzo</strong></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4>Peor Horario</h4>
+                                            <p id="peakHour">Hora: <strong>5:00 - 7:00 PM</strong></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-4">
+                                    <div class="col-md-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h3>Noticias Recientes</h3>
+                                                <ul id="listaNoticias" class="list-group">
+                                                    <li class="list-group-item">Accidente en la Calle 72 deja 3 heridos.
+                                                    </li>
+                                                    <li class="list-group-item">Colisión en la Avenida Circunvalar
+                                                        afecta el tráfico en horas pico.</li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h3>Últimos Accidentes Registrados</h3>
+
+                                        <h5 class="card-title">Accidentes Recientes</h5>
+                                        <ul id="accidentList" class="list-group">
+                                            <!-- Los accidentes recientes se mostrarán aquí -->
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h3>Registrar Accidente</h3>
+                                        <form id="accidenteForm">
+                                            <div class="col-lg-8">
+                                                <div class="card mb-4">
+                                                    <div class="card-body">
+                                                        <h3>Mapa de Zonas de Accidentalidad</h3>
+                                                        <div id="map" style="height: 400px;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label for="primer_via" class="form-label">Calle</label>
+                                                    <input type="text" class="form-control" id="primer_via" name="primer_via" placeholder="Ejemplo: Calle 10" required>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="segunda_via" class="form-label">Carrera</label>
+                                                    <input type="text" class="form-control" id="segunda_via" name="segunda_via" placeholder="Ejemplo: Carrera 5" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label for="latitud" class="form-label">Latitud</label>
+                                                    <input type="text" class="form-control" id="latitud" name="latitud" readonly>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="Longitud" class="form-label">Longitud</label>
+                                                    <input type="text" class="form-control" id="longitud" name="Longitud"  readonly>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="tipo_accidente" class="form-label">Barrio</label>
+                                                <select id="tipo_accidente" name="tipo_accidente" class="form-select"
+                                                    required>
+                                                    <option value="Atropello">el prado</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="tipo_accidente" class="form-label">Tipo de Accidente</label>
+                                                <select id="tipo_accidente" name="tipo_accidente" class="form-select"
+                                                    required>
+                                                    <option value="Atropello">Atropello</option>
+                                                    <option value="choque">choque</option>
+                                                    <option value="Caida ocupante">Caida ocupante</option>
+                                                    <option value="Incendio">Incendio</option>
+                                                    <option value="otros">otros</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="condicion_victima" class="form-label">Condición de la
+                                                    Víctima</label>
+                                                <select id="condicion_victima" name="condicion_victima"
+                                                    class="form-select" required>
+                                                    <option value="Peaton">Peaton</option>
+                                                    <option value="Acompañante">Acompañante</option>
+                                                    <option value="Conductor">Conductor</option>
+                                                    <option value="Motociclista">Motociclista</option>
+                                                    <option value="Pasajero">Pasajero</option>
+                                                    <option value="Ciclista">Ciclista</option>
+                                                    <option value="Menor de edad">Menor de edad</option>
+                                                    <option value="No reporto">No reporto</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="sexo_victima" class="form-label">Edad de la
+                                                    Víctima</label>
+                                                <select id="sexo_victima" name="sexo_victima" class="form-select"
+                                                    required>
+                                                    <option value="F">Femenino</option>
+                                                    <option value="M">Masculino</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="gravedad_victima" class="form-label">Gravedad de la
+                                                    Víctima</label>
+                                                <select id="gravedad_victima" name="gravedad_victima" class="form-select"
+                                                    required>
+                                                    <option value="Herido">Herido</option>
+                                                    <option value="Muerto">Muerto</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="edad_victima" class="form-label">Edad de la Víctima</label>
+                                                <input type="number" class="form-control" id="edad_victima"
+                                                    name="edad_victima" min="0" required>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="cantidad_victimas" class="form-label">Cantidad de
+                                                    Víctimas</label>
+                                                <input type="number" class="form-control" id="cantidad_victimas"
+                                                    name="cantidad_victimas" min="1" required>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="desvios" class="form-label">Desvíos</label>
+                                                <input type="text" class="form-control" id="desvios" name="desvios"
+                                                    placeholder="Especifique desvíos o deje en blanco">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Registrar Accidente</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; Control Sensors 2024</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+
+            <!-- Botón flotante del chatbot -->
+            <button id="chatbot-button">💬</button>
+
+            <!-- Ventana del chatbot -->
+            <div id="chatbot-window">
+                <div id="chatbot-header">Chatbot</div>
+                <div id="chatbot-body"></div>
+                <div>
+                    <input type="text" id="user-input" placeholder="Escribe tu mensaje">
+                    <button id="send-button">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDt4HN4bJgj-U42utGZQpN70vTNm375dnk&callback=initMap&libraries=places"async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/usuarios.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/data.js"></script>
+
+
+
+</body>
+
+</html>

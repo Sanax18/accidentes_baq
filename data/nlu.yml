@@ -1,0 +1,81 @@
+version: "3.1"
+
+nlu:
+- intent: saludar
+  examples: |
+    - hey
+    - hola
+    - ola
+    - buenas
+    - buenos días
+    - Buenas tardes
+    - Buenas noches
+    - que mas
+    - ajá
+    - buenosdias
+    - buenastardes
+    - buenasnoches
+
+- intent: despedirse
+  examples: |
+    - gracias
+    - bueno
+    - dale
+    - ok
+    - bye
+
+- intent: como_estas
+  examples: |
+    - cómo estás?
+    - qué tal?
+    - cómo anda todo?
+    - todo bien?
+
+- intent: estado_p
+  examples: |
+    - bien
+    - excelente
+    - bacano
+    - elegante
+    - normal
+    - feliz
+    - alegre
+    - estoy bien
+    - estoy alegre
+    - estoy contento
+    - contento
+    - estoy feliz
+
+- intent: estado_n
+  examples: |
+    - mal
+    - negativo
+    - muy mal
+    - regular
+    - con ganas de nada
+    - sin ganas de hacer algo
+    - triste
+    - decaido
+    - disgustado
+
+- intent: enfermedades
+  examples: |
+    - qué significa tener 
+    - qué quiere decir 
+    - por qué me siento...
+    - por que tengo síntomas de
+
+- intent: recomendaciones
+  examples: |
+    - qué me recomiendas si
+    - qué me pueden ofrecer para
+    - qué debo hacer si
+    - qué debo hacer en caso de
+
+- intent: eres_bot
+  examples: |
+    - eres un bot?
+    - existes?
+    - estoy hablando con un humano?
+    - estoy hablando con un bot?
+    - converso con un bot?

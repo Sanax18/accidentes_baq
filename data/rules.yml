@@ -1,0 +1,66 @@
+# rules.yml
+version: "3.1"
+
+rules:
+
+- rule: Saludar al usuario
+  steps:
+    - intent: saludar
+    - action: utter_saludar
+
+- rule: Dar opciones
+  steps:
+    - intent: opciones
+    - action: utter_opciones
+
+- rule: Responder al usuario
+  steps:
+    - intent: responder_agradecimiento
+    - action: utter_responder_agradecimiento
+
+- rule: Responder si eres un bot
+  steps: 
+    - intent: eres_bot
+    - action: utter_eres_bot
+
+- rule: Despedirse del usuario
+  steps:
+    - intent: despedirse
+    - action: utter_despedirse
+
+- rule: Saber cómo estás
+  steps:
+    - intent: como_estas
+    - action: utter_como_estas
+
+- rule: Saber cómo estoy
+  steps:
+    - intent: como_estoy
+    - action: utter_como_estoy
+
+- rule: Estado positivo del usuario
+  steps:
+    - intent: estado_p
+    - action: utter_estado_p
+    - action: utter_opciones
+
+- rule: Estado negativo del usuario
+  steps:
+    - intent: estado_n
+    - action: utter_estado_n
+    - action: utter_opciones
+
+- rule: Responder por enfermedades
+  steps:
+    - intent: enfermedades
+    - action: utter_enfermedades
+
+- rule: Brindar recomendaciones
+  steps:
+    - intent: recomendaciones
+    - action: utter_recomendaciones
+
+- rule: Consultar cédula
+  steps:
+    - intent: consulta_cedula
+    - action: utter_consulta_cedula
